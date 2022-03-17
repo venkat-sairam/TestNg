@@ -38,7 +38,7 @@ public class TestClass {
     public TestClass() throws IOException {
 
 
-        excelWorkbook = new Xls_Reader(".\\TestData\\TestCases.xlsx");
+        excelWorkbook = new Xls_Reader(".\\TestCases.xlsx");
 
         sheetName = "TestData";
         rowCount = excelWorkbook.getRowCount(sheetName);
@@ -51,12 +51,9 @@ public class TestClass {
    @Test(dataProvider = "getData")
    public void testParallelRun(Hashtable<String,String> data) throws InterruptedException, IOException {
 
-       properties = new Properties();
-       fileInputStream = new FileInputStream("src/test/java/Utilities/inputdata.properties");
-       properties.load(fileInputStream);
+      
 
-
-       String browser= properties.getProperty("browser");
+       String browser= "chrome";
 
        if(browser.equalsIgnoreCase("chrome")) {
 
