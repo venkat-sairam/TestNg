@@ -34,6 +34,7 @@ public class TestClass {
     Xls_Reader excelWorkbook;
     String sheetName;
 
+ThreadLocal<WebDriver> d=new ThreadLocal<WebDriver>();
 
     public TestClass() throws IOException {
 
@@ -47,6 +48,17 @@ public class TestClass {
         System.out.println("rowcount= " + rowCount + " --- column count = " + colCount);
     }
 
+    
+
+    void setDriverThread(WebDriver driver)
+    {
+        d.set(driver);
+
+    }
+    WebDriver getDriverThread()
+    {
+        return d.get();
+    }
 
    @Test(dataProvider = "getData")
    public void testParallelRun(Hashtable<String,String> data) throws InterruptedException, IOException {
@@ -59,6 +71,8 @@ public class TestClass {
 
            WebDriverManager.chromedriver().setup();
            driver = new ChromeDriver();
+            setDriverThread(driver);
+           driver = getDriverThread();
        }
        driver.manage().deleteAllCookies();
        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(TIMEOUT));
